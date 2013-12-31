@@ -6,7 +6,7 @@
     "description" : "A module to show how to make quests to developers.",
     "dependencies" : [
         {
-            "id" : "Questing",
+            "id" : "Tasks",
             "minVersion" : "0.1.0"
         }
     ],
