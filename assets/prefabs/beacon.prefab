@@ -1,0 +1,13 @@
+{
+    "QuestBeacon" : {
+        "beaconName" : "testertron5000"
+    },
+    "RigidBody" : {
+        "kinematic" : false,
+        "collisionGroup" : "engine:sensor",
+        "collidesWith" : ["engine:sensor"]
+    },
+    "BoxShape" : {
+        "extents" : [2, 2, 2]
+    }
+}
