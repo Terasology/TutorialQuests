@@ -1,0 +1,14 @@
+{
+    "id" : "Quests",
+    "version" : "0.1.0",
+    "author" : "nh_99",
+    "displayName" : "Quests",
+    "description" : "A module to show how to make quests to developers.",
+    "dependencies" : [
+        {
+            "id" : "Questing",
+            "minVersion" : "0.1.0"
+        }
+    ],
+    "isServerSideOnly" : false
+}
