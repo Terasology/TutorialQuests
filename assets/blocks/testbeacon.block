@@ -8,7 +8,7 @@
         "topBottom" : "core:ChestTopBottom"
     },
     "entity" : {
-        "prefab" : "Questing:beacon"
+        "prefab" : "Quests:beacon"
     },
     "inventory" : {
         "stackable" : false,
