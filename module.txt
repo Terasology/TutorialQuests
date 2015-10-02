@@ -1,8 +1,8 @@
 {
-    "id" : "Quests",
-    "version" : "0.1.0",
-    "author" : "nh_99",
-    "displayName" : "Quests",
+    "id" : "QuestExamples",
+    "version" : "0.2.0-SNAPSHOT",
+    "author" : "nh_99, msteiger",
+    "displayName" : "QuestExamples",
     "description" : "A module to show how to make quests to developers.",
     "dependencies" : [
         {

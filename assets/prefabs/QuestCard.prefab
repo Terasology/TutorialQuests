@@ -1,16 +1,49 @@
 {
+    "DisplayName" : {
+        "name" : "Questing Card"
+    },
     "Item" : {
-            "name" : "Questing Card",
-            "icon" : "Book",
-            "usage" : "ON_USER",
-            "consumedOnUse" : true,
-            "renderWithIcon" : true
-        },
-    "QuestingCardFetch" : {
-        "questName" : "Test this quest!",
-        "goal" : "block:engine:dirt",
-        "friendlyGoal" : "Get a dirt block.",
-        "amount" : "3",
-        "returnTo" : "testertron5000"
+        "icon" : "Tasks:icons#Questing",
+        "usage" : "ON_USER",
+        "consumedOnUse" : true,
+        "renderWithIcon" : true
+    },
+    "Quest" : {
+        "shortName" : "TestQuest",
+        "description" : "Test this quest!",
+        "tasks" : [
+            {
+                "id" : "collectDirt",
+                "type" : "CollectBlocksTask",
+                "dependsOn" : ["collectDirtInTime"],
+                "data" : {
+                    "itemId" : "block:core:Dirt",
+                    "amount" : 3
+                }
+            },
+            {
+                "id" : "collectDirtInTime",
+                "type" : "TimeConstraintTask",
+                "data" : {
+                    "targetTime" : 60
+                }
+            },
+            {
+                "id" : "returnHome",
+                "type" : "GoToBeaconTask",
+                "dependsOn" : "collectDirt",
+                "data" : {
+                    "beaconId" : "homeBeacon"
+                }
+            },
+            {
+                "id" : "returnHomeInTime",
+                "dependsOn" : ["collectDirt"],
+                "type" : "TimeConstraintTask",
+                "data" : {
+                    "targetTime" : 30
+                }
+            }
+        ]
     }
 }
