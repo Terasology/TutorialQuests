@@ -50,39 +50,79 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
     public void process(Region region, EntityBuffer buffer) {
         SurfaceHeightFacet heightFacet = region.getFacet(SurfaceHeightFacet.class);
 
-        Vector2i location = new Vector2i(16, 16);
-        float yOff = 2;
+        Vector2i questLoc = new Vector2i(16, 16);
+        Vector2i beaconLoc = new Vector2i(-16, 16);
 
-        if (heightFacet.getWorldRegion().contains(location)) {
-            float y = heightFacet.getWorld(location);
-            if (region.getRegion().minY() <= y && region.getRegion().maxY() >= y) {
+        if (contains(region, heightFacet, questLoc, 2)) {
+            float y = heightFacet.getWorld(questLoc) + 2;
+            Vector3f pos3d = new Vector3f(questLoc.getX(), y, questLoc.getY());
+            EntityStore questPoint = createQuestPoint(pos3d);
 
-                Prefab questPoint = Assets.getPrefab("QuestPoint").get();
-                EntityStore entityStore = new EntityStore(questPoint);
+            buffer.enqueue(questPoint);
+        }
 
-                QuestListComponent questList = new QuestListComponent();
-                questList.questItems = Lists.newArrayList("QuestCard");
-                entityStore.addComponent(questList);
+        if (contains(region, heightFacet, beaconLoc, 2)) {
+            float y = heightFacet.getWorld(beaconLoc) + 2;
+            Vector3f pos3d = new Vector3f(beaconLoc.getX(), y, beaconLoc.getY());
+            EntityStore questPoint = createTargetBeacon(pos3d);
 
-                NameTagComponent nameTagComponent = new NameTagComponent();
-                nameTagComponent.text = questList.questItems.toString();
-                nameTagComponent.textColor = Color.WHITE;
-                nameTagComponent.yOffset = -1;
-                nameTagComponent.scale = 2;
-                entityStore.addComponent(nameTagComponent);
-
-                Vector3f pos3d = new Vector3f(location.getX(), y + yOff, location.getY());
-                LocationComponent locationComponent = questPoint.getComponent(LocationComponent.class);
-                if (locationComponent == null) {
-                    locationComponent = new LocationComponent(pos3d);
-                } else {
-                    locationComponent.setWorldPosition(pos3d);
-                }
-                entityStore.addComponent(locationComponent);
-
-                buffer.enqueue(entityStore);
-            }
+            buffer.enqueue(questPoint);
         }
    }
 
+    private boolean contains(Region region, SurfaceHeightFacet heightFacet, Vector2i pos, float heightOff) {
+        if (heightFacet.getWorldRegion().contains(pos)) {
+            float y = heightFacet.getWorld(pos) + heightOff;
+            if (region.getRegion().minY() <= y && region.getRegion().maxY() >= y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private EntityStore createQuestPoint(Vector3f pos3d) {
+        Prefab questPoint = Assets.getPrefab("QuestPoint").get();
+        EntityStore entityStore = new EntityStore(questPoint);
+
+        QuestListComponent questList = new QuestListComponent();
+        questList.questItems = Lists.newArrayList("QuestCard");
+        entityStore.addComponent(questList);
+
+        NameTagComponent nameTagComponent = new NameTagComponent();
+        nameTagComponent.text = questList.questItems.toString();
+        nameTagComponent.textColor = Color.WHITE;
+        nameTagComponent.yOffset = -1;
+        nameTagComponent.scale = 2;
+        entityStore.addComponent(nameTagComponent);
+
+        LocationComponent locationComponent = questPoint.getComponent(LocationComponent.class);
+        if (locationComponent == null) {
+            locationComponent = new LocationComponent(pos3d);
+        } else {
+            locationComponent.setWorldPosition(pos3d);
+        }
+        entityStore.addComponent(locationComponent);
+        return entityStore;
+    }
+
+    private EntityStore createTargetBeacon(Vector3f pos3d) {
+        Prefab beaconMark = Assets.getPrefab("BeaconMark").get();
+        EntityStore entityStore = new EntityStore(beaconMark);
+
+        NameTagComponent nameTagComponent = new NameTagComponent();
+        nameTagComponent.text = "Target";
+        nameTagComponent.textColor = Color.WHITE;
+        nameTagComponent.yOffset = -1;
+        nameTagComponent.scale = 2;
+        entityStore.addComponent(nameTagComponent);
+
+        LocationComponent locationComponent = beaconMark.getComponent(LocationComponent.class);
+        if (locationComponent == null) {
+            locationComponent = new LocationComponent(pos3d);
+        } else {
+            locationComponent.setWorldPosition(pos3d);
+        }
+        entityStore.addComponent(locationComponent);
+        return entityStore;
+    }
 }
