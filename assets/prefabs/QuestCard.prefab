@@ -5,8 +5,7 @@
     "Item" : {
         "icon" : "Tasks:icons#Questing",
         "usage" : "ON_USER",
-        "consumedOnUse" : true,
-        "renderWithIcon" : true
+        "consumedOnUse" : true
     },
     "Quest" : {
         "shortName" : "TestQuest",
