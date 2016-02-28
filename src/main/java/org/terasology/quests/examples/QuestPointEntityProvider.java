@@ -16,7 +16,7 @@
 
 package org.terasology.quests.examples;
 
-import org.terasology.asset.Assets;
+import org.terasology.utilities.Assets;
 import org.terasology.assets.management.AssetManager;
 import org.terasology.entitySystem.entity.EntityStore;
 import org.terasology.entitySystem.prefab.Prefab;
@@ -24,12 +24,10 @@ import org.terasology.logic.location.LocationComponent;
 import org.terasology.logic.nameTags.NameTagComponent;
 import org.terasology.math.geom.Vector2i;
 import org.terasology.math.geom.Vector3f;
-import org.terasology.network.NetworkComponent;
 import org.terasology.registry.In;
 import org.terasology.rendering.nui.Color;
 import org.terasology.tasks.components.QuestListComponent;
 import org.terasology.world.generation.EntityBuffer;
-import org.terasology.world.generation.EntityProvider;
 import org.terasology.world.generation.EntityProviderPlugin;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
