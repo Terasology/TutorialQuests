@@ -8,6 +8,10 @@
         {
             "id" : "Tasks",
             "minVersion" : "0.2.0-SNAPSHOT"
+        },
+        {
+            "id" : "Books",
+            "version" : "1.0.2-SNAPSHOT"
         }
     ],
     "isServerSideOnly" : false
