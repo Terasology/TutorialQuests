@@ -1,0 +1,55 @@
+ {
+    "parent" : "engine:iconItem",
+    "Item" : {
+        "icon" : "engine:items#brownBook",
+        "usage" : "ON_USER"
+    },
+    "DisplayName" : {
+        "name" : "Book"
+    },
+    "Book" : {
+        "tint" : [245, 222, 179, 255]
+    },
+    "InteractionTarget": {},
+    "InteractionScreen": {
+        "screen": "Books:BookScreen"
+    },
+    "Quest" : {
+        "shortName" : "TestBookQuest",
+        "description" : "Test this quest on book!",
+        "tasks" : [
+            {
+                "id" : "collectDirt",
+                "type" : "CollectBlocksTask",
+                "dependsOn" : ["collectDirtInTime"],
+                "data" : {
+                    "itemId" : "block:core:Dirt",
+                    "amount" : 5
+                }
+            },
+            {
+                "id" : "collectDirtInTime",
+                "type" : "TimeConstraintTask",
+                "data" : {
+                    "targetTime" : 60
+                }
+            },
+            {
+                "id" : "returnHome",
+                "type" : "GoToBeaconTask",
+                "dependsOn" : "collectDirt",
+                "data" : {
+                    "beaconId" : "homeBeacon"
+                }
+            },
+            {
+                "id" : "returnHomeInTime",
+                "dependsOn" : ["collectDirt"],
+                "type" : "TimeConstraintTask",
+                "data" : {
+                    "targetTime" : 30
+                }
+            }
+        ]
+    }
+}
