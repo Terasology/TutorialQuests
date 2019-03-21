@@ -19,6 +19,7 @@ package org.terasology.quests.examples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.entitySystem.event.EventPriority;
 import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
@@ -52,12 +53,13 @@ public class BookQuestSystem extends BaseComponentSystem {
      * @param quest Quest component that is currently interacted
      */
     @ReceiveEvent
-    public void onQuestActivated(ActivateEvent event,  QuestComponent quest) {
+    public void onQuestActivated(ActivateEvent event, EntityRef entity, QuestComponent quest) {
         String name = quest.shortName;
         for (Quest activeQuest : questSystem.getActiveQuests()) {
             if (name.equals(activeQuest.getShortName())) {
                 event.consume();
                 logger.warn("Duplicate Quest " + name + " cancelled");
+                break;
             }
         }
     }
