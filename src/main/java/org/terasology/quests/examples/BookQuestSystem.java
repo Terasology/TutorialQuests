@@ -20,30 +20,45 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.event.ReceiveEvent;
+import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.input.events.RightMouseDownButtonEvent;
 import org.terasology.logic.common.ActivateEvent;
+import org.terasology.tasks.Quest;
 import org.terasology.tasks.components.QuestComponent;
+import org.terasology.tasks.systems.QuestSystem;
 import org.terasology.assets.management.AssetManager;
 import org.terasology.registry.In;
 import org.terasology.world.generator.plugin.RegisterPlugin;
+
+import java.util.Collection;
 
 
 /**
  * Handles quest attached to book entity.
  */
-@RegisterSystem(value = RegisterMode.AUTHORITY)
-public class BookQuestSystem {
+@RegisterSystem(RegisterMode.AUTHORITY)
+public class BookQuestSystem extends BaseComponentSystem {
 
     @In
-    private AssetManager assetManager;
+    private QuestSystem questSystem;
 
     private static final Logger logger = LoggerFactory.getLogger(BookQuestSystem.class);
 
+    /**
+     * This method prevents addition of quest if quest with same shortName is active.
+     * @param event Event triggered due to interaction with Quest Book
+     * @param quest Quest component that is currently interacted
+     */
     @ReceiveEvent
-    public void onquestActivated(ActivateEvent event, QuestComponent quest) {
-        logger.warn("oquestActivated called");
+    public void onQuestActivated(ActivateEvent event,  QuestComponent quest) {
+        String name = quest.shortName;
+        for (Quest activeQuest : questSystem.getActiveQuests()) {
+            if (name.equals(activeQuest.getShortName())) {
+                event.consume();
+                logger.warn("Duplicate Quest " + name + " cancelled");
+            }
+        }
     }
-
 }
