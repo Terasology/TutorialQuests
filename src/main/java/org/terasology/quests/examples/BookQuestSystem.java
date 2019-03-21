@@ -18,23 +18,18 @@ package org.terasology.quests.examples;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.terasology.books.logic.BookComponent;
 import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.event.EventPriority;
 import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
-import org.terasology.input.events.RightMouseDownButtonEvent;
 import org.terasology.logic.common.ActivateEvent;
 import org.terasology.tasks.Quest;
+import org.terasology.tasks.Task;
 import org.terasology.tasks.components.QuestComponent;
 import org.terasology.tasks.systems.QuestSystem;
-import org.terasology.assets.management.AssetManager;
 import org.terasology.registry.In;
-import org.terasology.world.generator.plugin.RegisterPlugin;
-
-import java.util.Collection;
-
 
 /**
  * Handles quest attached to book entity.
@@ -62,5 +57,18 @@ public class BookQuestSystem extends BaseComponentSystem {
                 break;
             }
         }
+    }
+
+    @ReceiveEvent
+    public void updateBookContent(ActivateEvent event, EntityRef entity, QuestComponent quest, BookComponent book) {
+        String content = "Here's what you have to do:\n";
+        for (Task task : quest.tasks) {
+            content += "    " + task.toString() + '\n';
+        }
+        content += "\nMay the FORCE be with you...";
+
+        //List<String> pages = new ArrayList<>(Lists.newArrayList(content, ""));
+        book.pages.set(0, content);
+        entity.saveComponent(book);
     }
 }

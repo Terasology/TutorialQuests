@@ -8,6 +8,7 @@
         "name" : "Book"
     },
     "Book" : {
+        "title" : "Quest Book",
         "tint" : [245, 222, 179, 255]
     },
     "InteractionTarget": {},
