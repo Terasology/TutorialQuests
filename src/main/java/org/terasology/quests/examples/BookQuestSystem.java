@@ -28,6 +28,7 @@ import org.terasology.logic.common.ActivateEvent;
 import org.terasology.tasks.Quest;
 import org.terasology.tasks.Task;
 import org.terasology.tasks.components.QuestComponent;
+import org.terasology.tasks.events.BeforeQuestEvent;
 import org.terasology.tasks.systems.QuestSystem;
 import org.terasology.registry.In;
 
@@ -42,23 +43,6 @@ public class BookQuestSystem extends BaseComponentSystem {
 
     private static final Logger logger = LoggerFactory.getLogger(BookQuestSystem.class);
 
-    /**
-     * This method prevents addition of quest if quest with same shortName is active.
-     * @param event Event triggered due to interaction with Quest Book
-     * @param quest Quest component that is currently interacted
-     */
-    @ReceiveEvent
-    public void onQuestActivated(ActivateEvent event, EntityRef entity, QuestComponent quest) {
-        String name = quest.shortName;
-        for (Quest activeQuest : questSystem.getActiveQuests()) {
-            if (name.equals(activeQuest.getShortName())) {
-                event.consume();
-                logger.warn("Duplicate Quest " + name + " cancelled");
-                break;
-            }
-        }
-    }
-
     @ReceiveEvent
     public void updateBookContent(ActivateEvent event, EntityRef entity, QuestComponent quest, BookComponent book) {
         String content = "Here's what you have to do:\n";
@@ -67,8 +51,24 @@ public class BookQuestSystem extends BaseComponentSystem {
         }
         content += "\nMay the FORCE be with you...";
 
-        //List<String> pages = new ArrayList<>(Lists.newArrayList(content, ""));
         book.pages.set(0, content);
         entity.saveComponent(book);
+    }
+
+    /**
+     * This method prevents addition of quest if quest with same shortName is active.
+     * @param event Event triggered by QuestSystem due to interaction with Quest Book
+     * @param entity Entity on which quest is attached
+     */
+    @ReceiveEvent
+    public void onQuestActivated(BeforeQuestEvent event, EntityRef entity) {
+        String name = event.getQuestName();
+        for (Quest activeQuest : questSystem.getActiveQuests()) {
+            if (name.equals(activeQuest.getShortName())) {
+                event.consume();
+                logger.warn("Duplicate Quest " + name + " cancelled");
+                break;
+            }
+        }
     }
 }
