@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 MovingBlocks
+ * Copyright 2019 MovingBlocks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,10 +38,10 @@ import org.terasology.registry.In;
 @RegisterSystem(RegisterMode.AUTHORITY)
 public class BookQuestSystem extends BaseComponentSystem {
 
+    private static final Logger logger = LoggerFactory.getLogger(BookQuestSystem.class);
+
     @In
     private QuestSystem questSystem;
-
-    private static final Logger logger = LoggerFactory.getLogger(BookQuestSystem.class);
 
     @ReceiveEvent
     public void updateBookContent(ActivateEvent event, EntityRef entity, QuestComponent quest, BookComponent book) {
@@ -57,7 +57,8 @@ public class BookQuestSystem extends BaseComponentSystem {
 
     /**
      * This method prevents addition of quest if quest with same shortName is active.
-     * @param event Event triggered by QuestSystem due to interaction with Quest Book
+     *
+     * @param event  Event triggered by QuestSystem due to interaction with Quest Book
      * @param entity Entity on which quest is attached
      */
     @ReceiveEvent

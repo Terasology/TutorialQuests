@@ -32,7 +32,6 @@ import org.terasology.world.generation.EntityProviderPlugin;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generator.plugin.RegisterPlugin;
-import org.terasology.books.logic.BookComponent;
 
 import com.google.common.collect.Lists;
 
@@ -67,7 +66,7 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
 
             buffer.enqueue(questPoint);
         }
-   }
+    }
 
     private boolean contains(Region region, SurfaceHeightFacet heightFacet, Vector2i pos, float heightOff) {
         if (heightFacet.getWorldRegion().contains(pos)) {
