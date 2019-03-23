@@ -9,7 +9,9 @@
     },
     "Book" : {
         "title" : "Quest Book",
-        "tint" : [245, 222, 179, 255]
+        "tint" : [245, 222, 179, 255],
+        "pages" : ["Here's what you have to do\n    Collect 5 dirt blocks in 60 s\n    Return to Home Beacon in 30s\n\nMay the FORCE be with you...",
+        ""]
     },
     "InteractionTarget": {},
     "InteractionScreen": {
