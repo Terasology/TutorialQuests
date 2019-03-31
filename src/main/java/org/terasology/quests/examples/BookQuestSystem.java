@@ -66,7 +66,6 @@ public class BookQuestSystem extends BaseComponentSystem {
             QuestComponent itemQuest = entityThrown.getComponent(QuestComponent.class);
             for (Quest quest : questSystem.getActiveQuests()) {
                 if (quest.getShortName().equals(itemQuest.shortName)) {
-                    logger.warn("Entity with QuestComponent thrown, removing quest");
                     questSystem.removeQuest(quest, true);
                     break;
                 }
