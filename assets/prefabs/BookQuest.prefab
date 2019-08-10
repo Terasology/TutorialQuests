@@ -23,7 +23,7 @@
         "tasks" : [
             {
                 "id" : "collectDirt",
-                "type" : "CollectBlocksTask",
+                "class" : "CollectBlocksTask",
                 "dependsOn" : ["collectDirtInTime"],
                 "data" : {
                     "itemId" : "block:core:Dirt",
@@ -32,14 +32,14 @@
             },
             {
                 "id" : "collectDirtInTime",
-                "type" : "TimeConstraintTask",
+                "class" : "TimeConstraintTask",
                 "data" : {
                     "targetTime" : 60
                 }
             },
             {
                 "id" : "returnHome",
-                "type" : "GoToBeaconTask",
+                "class" : "GoToBeaconTask",
                 "dependsOn" : "collectDirt",
                 "data" : {
                     "beaconId" : "homeBeacon"
@@ -48,7 +48,7 @@
             {
                 "id" : "returnHomeInTime",
                 "dependsOn" : ["collectDirt"],
-                "type" : "TimeConstraintTask",
+                "class" : "TimeConstraintTask",
                 "data" : {
                     "targetTime" : 30
                 }
