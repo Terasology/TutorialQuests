@@ -16,7 +16,7 @@
                 "class" : "CollectBlocksTask",
                 "dependsOn" : ["collectDirtInTime"],
                 "data" : {
-                    "itemId" : "block:core:Dirt",
+                    "itemId" : "block:CoreBlocks:Dirt",
                     "amount" : 3
                 }
             },
