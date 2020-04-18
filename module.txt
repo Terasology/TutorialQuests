@@ -5,14 +5,9 @@
     "displayName" : "QuestExamples",
     "description" : "A module to show how to make quests to developers.",
     "dependencies" : [
-        {
-            "id" : "Tasks",
-            "minVersion" : "0.2.0-SNAPSHOT"
-        },
-        {
-            "id" : "Books",
-            "version" : "1.0.2-SNAPSHOT"
-        },
+        {"id" : "CoreBlocks", "minVersion" : "1.0.0"},
+        {"id" : "Tasks", "minVersion" : "0.2.0-SNAPSHOT"},
+        {"id" : "Books", "minVersion" : "1.0.3-SNAPSHOT"},
         {"id": "ModuleTestingEnvironment","minVersion": "0.1.0", "optional":true}
     ],
     "isServerSideOnly" : false

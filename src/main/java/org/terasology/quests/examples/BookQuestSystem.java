@@ -23,7 +23,9 @@ import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
+import org.terasology.logic.inventory.events.BeforeItemRemovedFromInventory;
 import org.terasology.tasks.Quest;
+import org.terasology.tasks.components.QuestComponent;
 import org.terasology.tasks.events.BeforeQuestEvent;
 import org.terasology.tasks.systems.QuestSystem;
 import org.terasology.registry.In;
@@ -54,6 +56,21 @@ public class BookQuestSystem extends BaseComponentSystem {
                 logger.warn("Duplicate Quest " + name + " cancelled");
                 break;
             }
+        }
+    }
+
+    @ReceiveEvent
+    public void onBookThrown(BeforeItemRemovedFromInventory event, EntityRef entity) {
+        EntityRef entityThrown = event.getItem();
+        if (entityThrown.hasComponent(QuestComponent.class)) {
+            QuestComponent itemQuest = entityThrown.getComponent(QuestComponent.class);
+            for (Quest quest : questSystem.getActiveQuests()) {
+                if (quest.getShortName().equals(itemQuest.shortName)) {
+                    questSystem.removeQuest(quest, true);
+                    break;
+                }
+            }
+
         }
     }
 }
