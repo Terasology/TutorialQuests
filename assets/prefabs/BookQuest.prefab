@@ -25,33 +25,25 @@
                 "id" : "collectDirt",
                 "class" : "Tasks:CollectBlocksTask",
                 "dependsOn" : ["collectDirtInTime"],
-                "data" : {
-                    "itemId" : "block:CoreBlocks:Dirt",
-                    "amount" : 5
-                }
+                "itemId" : "block:CoreBlocks:Dirt",
+                "targetAmount" : 5
             },
             {
                 "id" : "collectDirtInTime",
                 "class" : "Tasks:TimeConstraintTask",
-                "data" : {
-                    "targetTime" : 60
-                }
+                "targetTime" : 60
             },
             {
                 "id" : "returnHome",
                 "class" : "Tasks:GoToBeaconTask",
-                "dependsOn" : "collectDirt",
-                "data" : {
-                    "beaconId" : "homeBeacon"
-                }
+                "dependsOn" : ["collectDirt"],
+                "targetBeaconId" : "homeBeacon"
             },
             {
                 "id" : "returnHomeInTime",
                 "dependsOn" : ["collectDirt"],
                 "class" : "Tasks:TimeConstraintTask",
-                "data" : {
-                    "targetTime" : 30
-                }
+                "targetTime" : 30
             }
         ]
     }
