@@ -1,13 +1,14 @@
 {
-    "id" : "QuestExamples",
-    "version" : "0.2.0-SNAPSHOT",
-    "author" : "nh_99, msteiger",
-    "displayName" : "QuestExamples",
-    "description" : "A module to show how to make quests to developers.",
-    "dependencies" : [
-        {"id" : "CoreBlocks", "minVersion" : "1.0.0"},
-        {"id" : "Tasks", "minVersion" : "0.2.0-SNAPSHOT"},
-        {"id" : "Books", "minVersion" : "1.0.3-SNAPSHOT"}
+    "id": "QuestExamples",
+    "version": "1.0.0",
+    "author": "nh_99, msteiger",
+    "displayName": "QuestExamples",
+    "description": "A module to show how to make quests to developers.",
+    "dependencies": [
+        { "id": "Books", "minVersion": "1.0.3" },
+        { "id": "CoreAssets", "minVersion": "2.0.1" },
+        { "id": "Tasks", "minVersion": "0.2.0" }
     ],
-    "isServerSideOnly" : false
+    "isServerSideOnly": false,
+    "isTutorial": true
 }
