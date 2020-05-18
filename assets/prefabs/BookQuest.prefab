@@ -25,7 +25,7 @@
                 "id" : "collectDirt",
                 "class" : "Tasks:CollectBlocksTask",
                 "dependsOn" : ["collectDirtInTime"],
-                "itemId" : "block:CoreBlocks:Dirt",
+                "itemId" : "block:CoreAssets:Dirt",
                 "targetAmount" : 5
             },
             {
