@@ -2,7 +2,7 @@
     "id": "TutorialQuests",
     "version": "1.0.0",
     "author": "nh_99, msteiger",
-    "displayName": "QuestExamples",
+    "displayName": "Tutorial Quests",
     "description": "A module to show how to make quests to developers.",
     "dependencies": [
         { "id": "Books", "minVersion": "1.1.0" },
