@@ -1,5 +1,5 @@
 {
-    "id": "QuestExamples",
+    "id": "TutorialQuests",
     "version": "1.0.0",
     "author": "nh_99, msteiger",
     "displayName": "QuestExamples",
