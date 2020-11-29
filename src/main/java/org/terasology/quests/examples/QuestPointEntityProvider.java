@@ -16,7 +16,7 @@
 
 package org.terasology.quests.examples;
 
-import org.terasology.utilities.Assets;
+import com.google.common.collect.Lists;
 import org.terasology.assets.management.AssetManager;
 import org.terasology.entitySystem.entity.EntityStore;
 import org.terasology.entitySystem.prefab.Prefab;
@@ -27,13 +27,13 @@ import org.terasology.math.geom.Vector3f;
 import org.terasology.nui.Color;
 import org.terasology.registry.In;
 import org.terasology.tasks.components.QuestListComponent;
+import org.terasology.utilities.Assets;
 import org.terasology.world.generation.EntityBuffer;
 import org.terasology.world.generation.EntityProviderPlugin;
 import org.terasology.world.generation.Region;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.ElevationFacet;
+import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generator.plugin.RegisterPlugin;
-
-import com.google.common.collect.Lists;
 
 /**
  * Adds a quest point to any world generator
@@ -46,21 +46,22 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
 
     @Override
     public void process(Region region, EntityBuffer buffer) {
-        SurfaceHeightFacet heightFacet = region.getFacet(SurfaceHeightFacet.class);
+        ElevationFacet elevationFacet = region.getFacet(ElevationFacet.class);
+        SurfacesFacet surfacesFacet = region.getFacet(SurfacesFacet.class);
 
         Vector2i questLoc = new Vector2i(16, 16);
         Vector2i beaconLoc = new Vector2i(-16, 16);
 
-        if (contains(region, heightFacet, questLoc, 2)) {
-            float y = heightFacet.getWorld(questLoc) + 2;
+        if (contains(region, elevationFacet, questLoc, 2)) {
+            float y = surfacesFacet.getPrimarySurface(elevationFacet, questLoc.x, questLoc.y).orElse(elevationFacet.getWorld(questLoc)) + 2;
             Vector3f pos3d = new Vector3f(questLoc.getX(), y, questLoc.getY());
             EntityStore questPoint = createQuestPoint(pos3d);
 
             buffer.enqueue(questPoint);
         }
 
-        if (contains(region, heightFacet, beaconLoc, 2)) {
-            float y = heightFacet.getWorld(beaconLoc) + 2;
+        if (contains(region, elevationFacet, beaconLoc, 2)) {
+            float y = surfacesFacet.getPrimarySurface(elevationFacet, beaconLoc.x, beaconLoc.y).orElse(elevationFacet.getWorld(beaconLoc)) + 2;
             Vector3f pos3d = new Vector3f(beaconLoc.getX(), y, beaconLoc.getY());
             EntityStore questPoint = createTargetBeacon(pos3d);
 
@@ -68,9 +69,9 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
         }
     }
 
-    private boolean contains(Region region, SurfaceHeightFacet heightFacet, Vector2i pos, float heightOff) {
-        if (heightFacet.getWorldRegion().contains(pos)) {
-            float y = heightFacet.getWorld(pos) + heightOff;
+    private boolean contains(Region region, ElevationFacet elevationFacet, Vector2i pos, float heightOff) {
+        if (elevationFacet.getWorldRegion().contains(pos)) {
+            float y = elevationFacet.getWorld(pos) + heightOff;
             if (region.getRegion().minY() <= y && region.getRegion().maxY() >= y) {
                 return true;
             }
