@@ -17,13 +17,14 @@
 package org.terasology.quests.examples;
 
 import com.google.common.collect.Lists;
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
+import org.joml.Vector3f;
 import org.terasology.assets.management.AssetManager;
 import org.terasology.entitySystem.entity.EntityStore;
 import org.terasology.entitySystem.prefab.Prefab;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.logic.nameTags.NameTagComponent;
-import org.terasology.math.geom.Vector2i;
-import org.terasology.math.geom.Vector3f;
 import org.terasology.nui.Color;
 import org.terasology.registry.In;
 import org.terasology.tasks.components.QuestListComponent;
@@ -53,28 +54,28 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
         Vector2i beaconLoc = new Vector2i(-16, 16);
 
         if (contains(region, elevationFacet, questLoc, 2)) {
-            float y = surfacesFacet.getPrimarySurface(elevationFacet, questLoc.x, questLoc.y).orElse(elevationFacet.getWorld(questLoc)) + 2;
-            Vector3f pos3d = new Vector3f(questLoc.getX(), y, questLoc.getY());
+            float y = surfacesFacet.getPrimarySurface(elevationFacet, questLoc.x, questLoc.y)
+                    .orElse(elevationFacet.getWorld(questLoc)) + 2;
+            Vector3f pos3d = new Vector3f(questLoc.x(), y, questLoc.y());
             EntityStore questPoint = createQuestPoint(pos3d);
 
             buffer.enqueue(questPoint);
         }
 
         if (contains(region, elevationFacet, beaconLoc, 2)) {
-            float y = surfacesFacet.getPrimarySurface(elevationFacet, beaconLoc.x, beaconLoc.y).orElse(elevationFacet.getWorld(beaconLoc)) + 2;
-            Vector3f pos3d = new Vector3f(beaconLoc.getX(), y, beaconLoc.getY());
+            float y = surfacesFacet.getPrimarySurface(elevationFacet, beaconLoc.x, beaconLoc.y)
+                    .orElse(elevationFacet.getWorld(beaconLoc)) + 2;
+            Vector3f pos3d = new Vector3f(beaconLoc.x(), y, beaconLoc.y());
             EntityStore questPoint = createTargetBeacon(pos3d);
 
             buffer.enqueue(questPoint);
         }
     }
 
-    private boolean contains(Region region, ElevationFacet elevationFacet, Vector2i pos, float heightOff) {
-        if (elevationFacet.getWorldRegion().contains(pos)) {
+    private boolean contains(Region region, ElevationFacet elevationFacet, Vector2ic pos, float heightOff) {
+        if (elevationFacet.getWorldArea().contains(pos)) {
             float y = elevationFacet.getWorld(pos) + heightOff;
-            if (region.getRegion().minY() <= y && region.getRegion().maxY() >= y) {
-                return true;
-            }
+            return region.getRegion().minY() <= y && region.getRegion().maxY() >= y;
         }
         return false;
     }
@@ -87,11 +88,7 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
         questList.questItems = Lists.newArrayList("QuestCard");
         entityStore.addComponent(questList);
 
-        NameTagComponent nameTagComponent = new NameTagComponent();
-        nameTagComponent.text = questList.questItems.toString();
-        nameTagComponent.textColor = Color.WHITE;
-        nameTagComponent.yOffset = -1;
-        nameTagComponent.scale = 2;
+        NameTagComponent nameTagComponent = createNameTag(questList.questItems.toString());
         entityStore.addComponent(nameTagComponent);
 
         LocationComponent locationComponent = questPoint.getComponent(LocationComponent.class);
@@ -100,7 +97,7 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
         } else {
             locationComponent.setWorldPosition(pos3d);
         }
-        entityStore.addComponent(locationComponent);
+        entityStore.addOrSaveComponent(locationComponent);
         return entityStore;
     }
 
@@ -108,11 +105,7 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
         Prefab beaconMark = Assets.getPrefab("BeaconMark").get();
         EntityStore entityStore = new EntityStore(beaconMark);
 
-        NameTagComponent nameTagComponent = new NameTagComponent();
-        nameTagComponent.text = "Target";
-        nameTagComponent.textColor = Color.WHITE;
-        nameTagComponent.yOffset = -1;
-        nameTagComponent.scale = 2;
+        NameTagComponent nameTagComponent = createNameTag("Target");
         entityStore.addComponent(nameTagComponent);
 
         LocationComponent locationComponent = beaconMark.getComponent(LocationComponent.class);
@@ -121,7 +114,16 @@ public class QuestPointEntityProvider implements EntityProviderPlugin {
         } else {
             locationComponent.setWorldPosition(pos3d);
         }
-        entityStore.addComponent(locationComponent);
+        entityStore.addOrSaveComponent(locationComponent);
         return entityStore;
+    }
+
+    private NameTagComponent createNameTag(String s) {
+        NameTagComponent nameTagComponent = new NameTagComponent();
+        nameTagComponent.text = s;
+        nameTagComponent.textColor = Color.WHITE;
+        nameTagComponent.yOffset = -1;
+        nameTagComponent.scale = 2;
+        return nameTagComponent;
     }
 }
