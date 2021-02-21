@@ -1,6 +1,6 @@
 {
     "id": "TutorialQuests",
-    "version": "1.0.0",
+    "version": "1.0.1-SNAPSHOT",
     "author": "nh_99, msteiger",
     "displayName": "Tutorial Quests",
     "description": "A module to show how to make quests to developers.",
