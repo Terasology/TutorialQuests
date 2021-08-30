@@ -23,7 +23,7 @@ import org.terasology.engine.entitySystem.event.ReceiveEvent;
 import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
 import org.terasology.engine.entitySystem.systems.RegisterMode;
 import org.terasology.engine.entitySystem.systems.RegisterSystem;
-import org.terasology.engine.logic.inventory.events.BeforeItemRemovedFromInventory;
+import org.terasology.module.inventory.events.BeforeItemRemovedFromInventory;
 import org.terasology.tasks.Quest;
 import org.terasology.tasks.components.QuestComponent;
 import org.terasology.tasks.events.BeforeQuestEvent;
