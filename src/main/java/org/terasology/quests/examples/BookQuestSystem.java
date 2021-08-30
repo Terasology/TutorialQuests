@@ -18,17 +18,17 @@ package org.terasology.quests.examples;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
-import org.terasology.logic.inventory.events.BeforeItemRemovedFromInventory;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.event.ReceiveEvent;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.logic.inventory.events.BeforeItemRemovedFromInventory;
 import org.terasology.tasks.Quest;
 import org.terasology.tasks.components.QuestComponent;
 import org.terasology.tasks.events.BeforeQuestEvent;
 import org.terasology.tasks.systems.QuestSystem;
-import org.terasology.registry.In;
+import org.terasology.engine.registry.In;
 
 /**
  * Handles quest attached to book entity.

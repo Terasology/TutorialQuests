@@ -21,20 +21,20 @@ import org.joml.Vector2i;
 import org.joml.Vector2ic;
 import org.joml.Vector3f;
 import org.terasology.assets.management.AssetManager;
-import org.terasology.entitySystem.entity.EntityStore;
-import org.terasology.entitySystem.prefab.Prefab;
-import org.terasology.logic.location.LocationComponent;
-import org.terasology.logic.nameTags.NameTagComponent;
+import org.terasology.engine.entitySystem.entity.EntityStore;
+import org.terasology.engine.entitySystem.prefab.Prefab;
+import org.terasology.engine.logic.location.LocationComponent;
+import org.terasology.engine.logic.nameTags.NameTagComponent;
 import org.terasology.nui.Color;
-import org.terasology.registry.In;
+import org.terasology.engine.registry.In;
 import org.terasology.tasks.components.QuestListComponent;
-import org.terasology.utilities.Assets;
-import org.terasology.world.generation.EntityBuffer;
-import org.terasology.world.generation.EntityProviderPlugin;
-import org.terasology.world.generation.Region;
-import org.terasology.world.generation.facets.ElevationFacet;
-import org.terasology.world.generation.facets.SurfacesFacet;
-import org.terasology.world.generator.plugin.RegisterPlugin;
+import org.terasology.engine.utilities.Assets;
+import org.terasology.engine.world.generation.EntityBuffer;
+import org.terasology.engine.world.generation.EntityProviderPlugin;
+import org.terasology.engine.world.generation.Region;
+import org.terasology.engine.world.generation.facets.ElevationFacet;
+import org.terasology.engine.world.generation.facets.SurfacesFacet;
+import org.terasology.engine.world.generator.plugin.RegisterPlugin;
 
 /**
  * Adds a quest point to any world generator
